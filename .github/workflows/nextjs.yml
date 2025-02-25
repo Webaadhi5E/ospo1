@@ -67,13 +67,16 @@ jobs:
           yarn next build
           yarn next export -o out
       
-      - name: Copy static files
-        run: cp -r public/* out/
-      
+      - name: Ensure public folder exists
+        run: mkdir -p out/public && cp -r public/* out/public/
+
+      - name: Move build to correct GitHub Pages path
+        run: mv out "ospo1"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./out
+          path: ./ospo1
           name: github-pages
           retention-days: 1
           clean: false
