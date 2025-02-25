@@ -1,25 +1,30 @@
 const isProd = process.env.NODE_ENV === "production";
-const repoName = "ospo1"; // Update with your GitHub repository name
+const repoName = "ospo1";
 
-module.exports = {
-  assetPrefix: isProd ? `/${repoName}` : "",
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  reactStrictMode: true,
+  swcMinify: true,
+
+  // Set the correct base path for GitHub Pages
+  assetPrefix: isProd ? `/${repoName}/` : "",
+  basePath: isProd ? `/${repoName}` : "",
+
+  // Ensure trailing slashes for correct routing on GitHub Pages
+  trailingSlash: true,
+
+  // Disable Image Optimization for GitHub Pages
   images: {
-    unoptimized: true, // Disable Next.js image optimization for GitHub Pages
+    unoptimized: true,
   },
-  webpack: (config) => {
-    config.resolve.modules.push(__dirname);
-    config.module.rules.push({
-      test: /\.svg$/,
-      use: [
-        { loader: "babel-loader" },
-        {
-          loader: "react-svg-loader",
-          options: { jsx: true },
-        },
-      ],
-    });
 
+  // Handle static file routing issues
+  webpack: (config, { isServer }) => {
+    if (!isServer) {
+      config.resolve.fallback = { fs: false };
+    }
     return config;
   },
-  devIndicators: { autoPrerender: false },
 };
+
+module.exports = nextConfig;
