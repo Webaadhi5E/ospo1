@@ -1,42 +1,25 @@
-const webpack = require('webpack');
-
-const isProd = process.env.NODE_ENV === 'production';
-const assetPrefix = isProd ? '' : '';
+const isProd = process.env.NODE_ENV === "production";
+const repoName = "ospo1"; // Update with your GitHub repository name
 
 module.exports = {
-  cssModules: true,
-  cssLoaderOptions: {
-    importLoaders: 1,
-    localIdentName: '[local]___[hash:base64:5]',
-    url: false,
+  assetPrefix: isProd ? `/${repoName}` : "",
+  images: {
+    unoptimized: true, // Disable Next.js image optimization for GitHub Pages
   },
-  assetPrefix,
   webpack: (config) => {
-    config.plugins.push(
-      new webpack.DefinePlugin({
-        'process.env.ASSET_PREFIX': JSON.stringify(assetPrefix),
-      }),
-    );
-
     config.resolve.modules.push(__dirname);
     config.module.rules.push({
       test: /\.svg$/,
       use: [
+        { loader: "babel-loader" },
         {
-          loader: 'babel-loader',
-        },
-        {
-          loader: 'react-svg-loader',
-          options: {
-            jsx: true, // true outputs JSX tags
-          },
+          loader: "react-svg-loader",
+          options: { jsx: true },
         },
       ],
     });
 
     return config;
   },
-  devIndicators: {
-    autoPrerender: false,
-  },
+  devIndicators: { autoPrerender: false },
 };
