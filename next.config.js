@@ -1,14 +1,10 @@
-const webpack = require('webpack');
-
-const isProd = process.env.NODE_ENV === "production";
-const assetPrefix = isProd ? "/ospo1" : ""; // Ensure assets load from correct path
+const webpack = require("webpack");
 
 module.exports = {
   output: "export",
-  assetPrefix,
   trailingSlash: true, // Ensures all static routes end with a `/`
   images: {
-    unoptimized: true, // Fixes `next/image` for static exports
+    unoptimized: true, // Fixes `next/image` issues in static exports
   },
   cssModules: true,
   cssLoaderOptions: {
@@ -19,12 +15,21 @@ module.exports = {
   webpack: (config) => {
     config.plugins.push(
       new webpack.DefinePlugin({
-        "process.env.ASSET_PREFIX": JSON.stringify(assetPrefix),
+        "process.env.ASSET_PREFIX": JSON.stringify(""), // Ensures no prefix is added
       })
     );
 
-    config.resolve.modules.push(__dirname);
+    // Ensure Webpack resolves modules correctly
+    if (config.resolve) {
+      config.resolve.modules.push(__dirname);
 
+      // Remove Webpack 4 fallback issues
+      if (config.resolve.fallback) {
+        delete config.resolve.fallback;
+      }
+    }
+
+    // Add support for importing SVGs as React components
     config.module.rules.push({
       test: /\.svg$/,
       use: [
