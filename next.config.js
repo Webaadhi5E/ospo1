@@ -1,45 +1,38 @@
 const webpack = require("webpack");
 
+const isProd = process.env.NODE_ENV === "production";
+
 module.exports = {
   output: "export",
-  trailingSlash: true, // Ensures all static routes end with a `/`
+  assetPrefix: isProd ? "/ospo1" : "", // ✅ Correctly handles GitHub Pages prefix
+  trailingSlash: true, // ✅ Ensures all static routes end with `/` for GitHub Pages
+
   images: {
-    unoptimized: true, // Fixes `next/image` issues in static exports
+    unoptimized: true, // ✅ Fixes `next/image` issue in static exports
   },
-  cssModules: true,
-  cssLoaderOptions: {
-    importLoaders: 1,
-    localIdentName: "[local]___[hash:base64:5]",
-    url: false,
-  },
-  webpack: (config) => {
+
+  webpack: (config, { isServer }) => {
     config.plugins.push(
       new webpack.DefinePlugin({
-        "process.env.ASSET_PREFIX": JSON.stringify(""), // Ensures no prefix is added
+        "process.env.ASSET_PREFIX": JSON.stringify(isProd ? "/ospo1" : ""),
       })
     );
 
-    // Ensure Webpack resolves modules correctly
+    // ✅ Ensure Webpack resolves modules correctly
     if (config.resolve) {
       config.resolve.modules.push(__dirname);
-
-      // Remove Webpack 4 fallback issues
-      if (config.resolve.fallback) {
-        delete config.resolve.fallback;
-      }
     }
 
-    // Add support for importing SVGs as React components
+    // ✅ Add support for importing SVGs as React components using `@svgr/webpack`
     config.module.rules.push({
       test: /\.svg$/,
-      use: [
-        { loader: "babel-loader" },
-        { loader: "react-svg-loader", options: { jsx: true } },
-      ],
+      issuer: /\.[jt]sx?$/,
+      use: ["@svgr/webpack"],
     });
 
     return config;
   },
+
   devIndicators: {
     autoPrerender: false,
   },
