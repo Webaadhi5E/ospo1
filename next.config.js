@@ -14,7 +14,7 @@ module.exports = {
   webpack: (config, { isServer }) => {
     config.plugins.push(
       new webpack.DefinePlugin({
-        "process.env.ASSET_PREFIX": JSON.stringify(isProd ? "/ospo1" : ""),
+        'process.env.ASSET_PREFIX': JSON.stringify(assetPrefix),
       })
     );
 
