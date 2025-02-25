@@ -8,16 +8,13 @@ const Nav = () => {
   const navOpenRef = useRef(null);
   const navCloseRef = useRef(null);
   const navItems = [
-    { href: `${process.env.ASSET_PREFIX}/`, label: "About" },
-    { href: `${process.env.ASSET_PREFIX}/projects`, label: "Projects" },
-    { href: `${process.env.ASSET_PREFIX}/people`, label: "Talks" },
-    { href: `${process.env.ASSET_PREFIX}/community`, label: "Community" },
-    { href: `${process.env.ASSET_PREFIX}/events`, label: "Events" },
-    { href: `${process.env.ASSET_PREFIX}/blog`, label: "News" },
-    {
-      href: `${process.env.ASSET_PREFIX}/cybersecurity_research`,
-      label: "Cybersecurity",
-    },
+    { href: '/', label: "About" },
+    { href: '/projects', label: "Projects" },
+    { href: '/people', label: "Talks" },
+    { href: '/community', label: "Community" },
+    { href: '/events', label: "Events" },
+    { href: '/blog', label: "News" },
+    { href: '/cybersecurity_research', label: "Cybersecurity" },
   ];
   useEffect(() => {
     if (open === null) {
