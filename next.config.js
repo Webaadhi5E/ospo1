@@ -1,11 +1,13 @@
 const webpack = require('webpack');
 
 const isProd = process.env.NODE_ENV === 'production';
-const assetPrefix = isProd ? '/ospo1' : ''; // Adjust '/ospo1' to your repository name if different
+// Remove the leading slash to prevent double slashes in URLs
+const assetPrefix = isProd ? 'ospo1' : '';
 
 module.exports = {
   output: 'export',
-  assetPrefix: assetPrefix, // Use the defined assetPrefix
+  basePath: isProd ? '/ospo1' : '', // Add this line to handle base routing
+  assetPrefix: isProd ? '/ospo1' : '', // Update this to include the leading slash
   trailingSlash: true, // Ensures all static routes end with a `/`
   images: {
     unoptimized: true, // Fixes `next/image` issues in static exports
@@ -19,7 +21,8 @@ module.exports = {
   webpack: (config) => {
     config.plugins.push(
       new webpack.DefinePlugin({
-        'process.env.ASSET_PREFIX': JSON.stringify(assetPrefix), // Define the ASSET_PREFIX environment variable
+        // Remove the leading slash here as it will be added by the router
+        'process.env.ASSET_PREFIX': JSON.stringify(''),
       })
     );
 
