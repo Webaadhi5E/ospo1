@@ -1,28 +1,25 @@
 const webpack = require('webpack');
 
-const repoName = "ospo1"; // Change this to your GitHub repo name
-const isProd = process.env.NODE_ENV === 'production';
-const assetPrefix = isProd ? `/${repoName}` : "";
+const isProd = process.env.NODE_ENV === "production";
+const assetPrefix = isProd ? "/ospo1" : ""; // Ensure assets load from correct path
 
 module.exports = {
   output: "export",
   assetPrefix,
-  basePath: isProd ? `/${repoName}` : "",
-  trailingSlash: true,
+  trailingSlash: true, // Ensures all static routes end with a `/`
   images: {
-    unoptimized: true, // Fixes `next/image` issues in static sites
+    unoptimized: true, // Fixes `next/image` for static exports
   },
   cssModules: true,
   cssLoaderOptions: {
     importLoaders: 1,
-    localIdentName: '[local]___[hash:base64:5]',
+    localIdentName: "[local]___[hash:base64:5]",
     url: false,
   },
   webpack: (config) => {
     config.plugins.push(
       new webpack.DefinePlugin({
-        'process.env.ASSET_PREFIX': JSON.stringify(assetPrefix),
-        'process.env.BASE_PATH': JSON.stringify(isProd ? `/${repoName}` : ""),
+        "process.env.ASSET_PREFIX": JSON.stringify(assetPrefix),
       })
     );
 
@@ -31,8 +28,8 @@ module.exports = {
     config.module.rules.push({
       test: /\.svg$/,
       use: [
-        { loader: 'babel-loader' },
-        { loader: 'react-svg-loader', options: { jsx: true } },
+        { loader: "babel-loader" },
+        { loader: "react-svg-loader", options: { jsx: true } },
       ],
     });
 
