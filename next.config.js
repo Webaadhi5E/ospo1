@@ -1,18 +1,15 @@
 const isProd = process.env.NODE_ENV === "production";
-const repoName = "ospo1"; // Change this to your actual repository name
+const repoName = "ospo1"; // Change this if the repo name differs
 
-const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-  assetPrefix: isProd ? `/${repoName}/` : "",
+module.exports = {
+  output: "export", // Ensures static export for GitHub Pages
   basePath: isProd ? `/${repoName}` : "",
-  trailingSlash: true,
-  images: {
-    unoptimized: true, 
-  },
+  assetPrefix: isProd ? `/${repoName}/` : "",
+  trailingSlash: true, // Ensures correct paths for static exports
   env: {
     NEXT_PUBLIC_BASE_PATH: isProd ? `/${repoName}` : "",
   },
+  images: {
+    unoptimized: true, // Fixes image loading issues on GitHub Pages
+  },
 };
-
-module.exports = nextConfig;
