@@ -14,7 +14,6 @@ import {
   pages,
 } from "src/data/research_areas.json";
 import { data } from "src/data/research_areas_data.json";
-import { useRouter } from "next/router";
 
 const ResearchAreas = () => {
   const [searchResults, setSearchResults] = useState(data);
