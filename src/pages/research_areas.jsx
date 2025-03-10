@@ -127,7 +127,7 @@ const ResearchAreas = () => {
     setSelectedPublications(selectedList);
   }
 
-  useEffect(() => {}, [title]);
+  useEffect(() => { }, [title]);
 
   useEffect(() => {
     filter_by(selectedYears, selectedPublications);
@@ -166,10 +166,10 @@ const ResearchAreas = () => {
       </Head>
       <Layout>
         <div className="go_to_cybersecurity_research">
-          <div onClick={() => router.back()}>
-            <Icon type="leftarrow" color="white" />
+          <a>
+            <Icon type="leftarrow" color="white" onClick={() => router.back()} />
             Cybersecurity Research
-          </div>
+          </a>
         </div>
         <Header
           image={featuredImage}
@@ -259,7 +259,7 @@ const ResearchAreas = () => {
                 avoidHighlightFirstOption={true}
                 // selectionLimit={1}
                 showArrow={true}
-                //singleSelect={true}
+              //singleSelect={true}
               />
             </div>
           </div>
