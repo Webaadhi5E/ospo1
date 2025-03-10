@@ -14,6 +14,7 @@ import {
   pages,
 } from "src/data/research_areas.json";
 import { data } from "src/data/research_areas_data.json";
+import { useRouter } from "next/router";
 
 const ResearchAreas = () => {
   const [searchResults, setSearchResults] = useState(data);
@@ -22,6 +23,7 @@ const ResearchAreas = () => {
   const [selectedPublications, setSelectedPublications] = useState([]);
   const [showClearAll, setShowClearAll] = useState(false);
   const { title } = useRouter().query;
+  const router = useRouter();
   function execute_search(value) {
     setSearchTerm(value);
     if (value != "") {
@@ -165,10 +167,10 @@ const ResearchAreas = () => {
       </Head>
       <Layout>
         <div className="go_to_cybersecurity_research">
-          <a href="/cybersecurity_research">
+          <div onClick={() => router.back()}>
             <Icon type="leftarrow" color="white" />
             Cybersecurity Research
-          </a>
+          </div>
         </div>
         <Header
           image={featuredImage}
