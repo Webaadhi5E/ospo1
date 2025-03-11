@@ -1408,11 +1408,11 @@ input::placeholder {
   pointer-events: none;
 }
 
-.icon-text-container {
+.back_button {
   display: flex;
   align-items: center;
 }
 
-.icon-text-container .icon {
+.back_button .icon {
   margin-right: 8px;
 }
