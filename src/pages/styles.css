@@ -1407,12 +1407,3 @@ input::placeholder {
   min-height: 90%;
   pointer-events: none;
 }
-
-.back_button {
-  display: flex;
-  align-items: center;
-}
-
-.back_button .icon {
-  margin-right: 8px;
-}
