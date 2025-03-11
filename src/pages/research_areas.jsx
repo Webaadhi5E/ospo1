@@ -168,7 +168,7 @@ const ResearchAreas = () => {
         <div className="go_to_cybersecurity_research">
           <a>
             <div onClick={() => router.back()}>
-              <Icon type="leftarrow" color="white" style={{ paddingRight: '8px' }} />
+              <Icon type="leftarrow" color="white"/>
               Cybersecurity Research
             </div>
           </a>
